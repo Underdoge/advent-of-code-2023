@@ -47,7 +47,7 @@ def sum_numbers(line: str) -> int:
 
 if __name__ == '__main__':
     sum_calibration_vals = 0
-    with open('day1/input.txt') as file:
+    with open('input.txt') as file:
         for line in file:
             sum_calibration_vals += sum_numbers(line)
     print(sum_calibration_vals)
