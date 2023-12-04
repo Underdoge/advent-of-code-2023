@@ -31,20 +31,20 @@ def is_gear_ratio(matrix: list, x: int, y: int) -> tuple:
     gear_ratio_location = ()
     if matrix[y-1][x-1] == "*":
         gear_ratio_location = (y-1, x-1)
-    if matrix[y-1][x] == "*":
+    elif matrix[y-1][x] == "*":
         gear_ratio_location = (y-1, x)
-    if x+1 < len(matrix[0]) and matrix[y-1][x+1] == "*":
+    elif x+1 < len(matrix[0]) and matrix[y-1][x+1] == "*":
         gear_ratio_location = (y-1, x+1)
-    if y+1 < len(matrix) and matrix[y+1][x-1] == "*":
+    elif y+1 < len(matrix) and matrix[y+1][x-1] == "*":
         gear_ratio_location = (y+1, x-1)
-    if y+1 < len(matrix) and matrix[y+1][x] == "*":
+    elif y+1 < len(matrix) and matrix[y+1][x] == "*":
         gear_ratio_location = (y+1, x)
-    if x+1 < len(matrix[0]) and y+1 < len(matrix) and (
+    elif x+1 < len(matrix[0]) and y+1 < len(matrix) and (
         matrix[y+1][x+1] == "*"):
         gear_ratio_location = (y+1, x+1)
-    if x+1 < len(matrix[0]) and matrix[y][x+1] == "*":
+    elif x+1 < len(matrix[0]) and matrix[y][x+1] == "*":
         gear_ratio_location = (y, x+1)
-    if matrix[y][x-1] == "*":
+    elif matrix[y][x-1] == "*":
         gear_ratio_location = (y, x-1)
     return gear_ratio_location
 
