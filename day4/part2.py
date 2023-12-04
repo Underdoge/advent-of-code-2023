@@ -1,4 +1,4 @@
-""" Day 4, part 1."""
+""" Day 4, part 2."""
 
 
 def read_cards(filename: str) -> list:
