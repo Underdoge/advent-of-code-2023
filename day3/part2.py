@@ -17,25 +17,6 @@ def read_schematic(filename: str) -> list:
     return matrix
 
 
-def find_gear_ratio(numbers_and_gears: list, x: int, y: int) -> int:
-    """ Search list for gear location, return ratio.
-
-    Args:
-        numbers_and_gears (list): A list with tuples with gear number,
-            and gear coordinate.
-        x (int): the x coordinate of the gear.
-        y (int): the y coordinate of the gear.
-
-    Returns:
-        int: gear number if it's in the list, otherwise zero.
-    """
-    gear_number = 0
-    for number, gear_x, gear_y in numbers_and_gears:
-        if gear_x == x and gear_y == y:
-            gear_number = number
-    return gear_number
-
-
 def is_gear_ratio(matrix: list, x: int, y: int) -> tuple:
     """ Check for an adjacent '*' symbol and return its location.
 
@@ -79,7 +60,7 @@ def sum_gear_ratios(matrix: list) -> int:
     """
     sum = 0
     number = []
-    numbers_and_gears = []
+    numbers_and_gears = {}
     gear_ratio = False
     for y in range(len(matrix[0])):
         for x in range(len(matrix)):
@@ -90,13 +71,12 @@ def sum_gear_ratios(matrix: list) -> int:
                     gear_ratio = True
             elif len(number) > 0:
                 if gear_ratio:
-                    if find_gear_ratio(numbers_and_gears, gear_x, gear_y) > 0:
-                        sum += find_gear_ratio(
-                            numbers_and_gears, gear_x, gear_y)*int(
+                    if (gear_x, gear_y) in numbers_and_gears:
+                        sum += numbers_and_gears[(gear_x, gear_y)]*int(
                                 "".join(number))
                     else:
-                        numbers_and_gears.append(
-                            (int("".join(number)), gear_x, gear_y))
+                        numbers_and_gears[(gear_x, gear_y)] = int(
+                            "".join(number))
                     gear_ratio = False
                 number = []
     return sum
