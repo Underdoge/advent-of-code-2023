@@ -48,13 +48,15 @@ def read_seeds(filename: str) -> list:
     return seeds
 
 def test_range(x, seeds, ranges):
-    locations = []
+    smallest_location = location_from_seed(seeds[0], ranges)
     print("Seed:", seeds[x], "Target:", seeds[x]+seeds[x+1])
     with ThreadPoolExecutor(max_workers=1000) as executor:
         future_location = [executor.submit(location_from_seed, seed, ranges) for seed in range(seeds[x], seeds[x]+seeds[x+1])]
         for future in concurrent.futures.as_completed(future_location):
-            locations.append(future.result())
-    return min(locations)
+            location = future.result()
+            if location < smallest_location:
+                smallest_location = location
+    return smallest_location
 
 def smallest_location(filename: str) -> int:
     seeds = read_seeds(filename)
