@@ -1,9 +1,9 @@
 import time
 
 
-def location_from_seed(seed_number: int, filename: str) -> int:
-    previous_value = seed_number
-    next_value = 0
+def read_ranges(filename: str) -> list:
+    ranges = []
+    map = []
     with open(filename) as file:
         for line in file:
             if line != "\n" and line.split()[0] != "seeds:" and (
@@ -12,34 +12,48 @@ def location_from_seed(seed_number: int, filename: str) -> int:
                     int(line.split()[0]),
                     int(line.split()[1]),
                     int(line.split()[2]))
-                if previous_value >= source_range_start and (
-                    previous_value < source_range_start+range_length):
-                    next_value = previous_value+(
-                        dest_range_start-source_range_start)
+                map.append([dest_range_start, source_range_start, range_length])
             elif line != "\n" and line.split()[1] == "map:":
-                if next_value != 0:
-                    previous_value = next_value
-                    next_value = 0
+                if len(map) > 0:
+                    ranges.append(map)
+                    map = []
+    ranges.append(map)
+    return ranges
+
+def location_from_seed(seed_number: int, ranges: list) -> int:
+    current_value = seed_number
+    next_value = 0
+    for range in ranges:
+        for dest_range_start, source_range_start, range_length in range:
+            top = source_range_start+range_length
+            if current_value >= source_range_start and (
+                current_value < top):
+                next_value = current_value+(
+                    dest_range_start-source_range_start)
         if next_value != 0:
-            return next_value
-        else:
-            return previous_value
+            current_value = next_value
+            next_value = 0
+    if next_value != 0:
+        return next_value
+    else:
+        return current_value
+
 
 def read_seeds(filename: str) -> list:
-    seeds = []
     with open(filename) as file:
         line = file.readline()
-        seeds = line.split()[1:]
+        seeds = [int(x) for x in line.split()[1:]]
     return seeds
 
 
 def smallest_location(filename: str) -> int:
     seeds = read_seeds(filename)
+    ranges = read_ranges(filename)
     locations = []
     for seed in seeds:
-        locations.append(location_from_seed(int(seed), filename))
-    print(locations)
+        locations.append(location_from_seed(seed, ranges))
     return min(locations)
+
 
 if __name__ == '__main__':
     tic = time.perf_counter()

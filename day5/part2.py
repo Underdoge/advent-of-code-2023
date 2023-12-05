@@ -1,9 +1,11 @@
+import concurrent.futures
 import time
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 
 
 def read_ranges(filename: str) -> list:
     ranges = []
-    range = []
+    map = []
     with open(filename) as file:
         for line in file:
             if line != "\n" and line.split()[0] != "seeds:" and (
@@ -12,11 +14,12 @@ def read_ranges(filename: str) -> list:
                     int(line.split()[0]),
                     int(line.split()[1]),
                     int(line.split()[2]))
-                range.append([dest_range_start, source_range_start, range_length])
+                map.append([dest_range_start, source_range_start, range_length])
             elif line != "\n" and line.split()[1] == "map:":
-                if len(range) > 0:
-                    ranges.append(range)
-                    range = []
+                if len(map) > 0:
+                    ranges.append(map)
+                    map = []
+    ranges.append(map)
     return ranges
 
 
@@ -39,26 +42,29 @@ def location_from_seed(seed_number: int, ranges: list) -> int:
         return current_value
 
 def read_seeds(filename: str) -> list:
-    seeds = []
     with open(filename) as file:
         line = file.readline()
-        seeds = line.split()[1:]
+        seeds = [int(x) for x in line.split()[1:]]
     return seeds
 
+def test_range(x, seeds, ranges):
+    locations = []
+    print("Seed:", seeds[x], "Target:", seeds[x]+seeds[x+1])
+    with ThreadPoolExecutor(max_workers=1000) as executor:
+        future_location = [executor.submit(location_from_seed, seed, ranges) for seed in range(seeds[x], seeds[x]+seeds[x+1])]
+        for future in concurrent.futures.as_completed(future_location):
+            locations.append(future.result())
+    return min(locations)
 
 def smallest_location(filename: str) -> int:
     seeds = read_seeds(filename)
     ranges = read_ranges(filename)
-    last_smallest_location = 10000000
-    x=0
-    while x+1 <= len(seeds):
-        print("Seed:", int(seeds[x]), "Target:", int(seeds[x])+int(seeds[x+1]))
-        for seed in range(int(seeds[x]), int(seeds[x])+int(seeds[x+1]), 1):
-            new_loc = location_from_seed(int(seed), ranges)
-            if new_loc < last_smallest_location:
-                last_smallest_location = new_loc
-        x += 2
-    return last_smallest_location
+    locations = []
+    with ProcessPoolExecutor(max_workers=10) as executor:
+        future_location = [executor.submit(test_range, x, seeds, ranges) for x in range(len(seeds)) if x%2 ==0]
+        for future in concurrent.futures.as_completed(future_location):
+            locations.append(future.result())
+    return min(locations)
 
 
 if __name__ == '__main__':
