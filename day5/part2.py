@@ -54,6 +54,7 @@ def location_from_seed(seed_number: int, ranges: list) -> int:
                 current_value < top):
                 next_value = current_value+(
                     dest_range_start-source_range_start)
+                break
         if next_value != 0:
             current_value = next_value
             next_value = 0
