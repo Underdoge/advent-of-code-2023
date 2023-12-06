@@ -1,4 +1,5 @@
 import time
+import operator
 
 
 def read_ranges(filename: str) -> list:
@@ -15,21 +16,24 @@ def read_ranges(filename: str) -> list:
                 map.append([dest_range_start, source_range_start, range_length])
             elif line != "\n" and line.split()[1] == "map:":
                 if len(map) > 0:
+                    map = sorted(map, key=operator.itemgetter(1))
                     ranges.append(map)
                     map = []
+    map = sorted(map, key=operator.itemgetter(1))
     ranges.append(map)
     return ranges
 
 def location_from_seed(seed_number: int, ranges: list) -> int:
     current_value = seed_number
     next_value = 0
-    for range in ranges:
-        for dest_range_start, source_range_start, range_length in range:
-            top = source_range_start+range_length
-            if current_value >= source_range_start and (
+    for map in ranges:
+        for dest, source, length in map:
+            top = source + length
+            if current_value >= source and (
                 current_value < top):
                 next_value = current_value+(
-                    dest_range_start-source_range_start)
+                    dest - source)
+                break
         if next_value != 0:
             current_value = next_value
             next_value = 0
