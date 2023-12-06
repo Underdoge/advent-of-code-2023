@@ -1,8 +1,17 @@
-import time
+""" Day 5, part 1."""
 import operator
+import time
 
 
 def read_ranges(filename: str) -> list:
+    """ Store ranges in a list.
+
+    Args:
+        filename (str): input filename with ranges.
+
+    Returns:
+        list: a list containing the ranges.
+    """
     ranges = []
     map = []
     with open(filename) as file:
@@ -24,6 +33,15 @@ def read_ranges(filename: str) -> list:
     return ranges
 
 def location_from_seed(seed_number: int, ranges: list) -> int:
+    """ Calculate the location from a seed number.
+
+    Args:
+        seed_number (int): The seed number.
+        ranges (list): The ranges.
+
+    Returns:
+        int: The location.
+    """
     current_value = seed_number
     next_value = 0
     for map in ranges:
@@ -44,6 +62,14 @@ def location_from_seed(seed_number: int, ranges: list) -> int:
 
 
 def read_seeds(filename: str) -> list:
+    """ Store seeds in a list.
+
+    Args:
+        filename (str): Input filename containing the seeds.
+
+    Returns:
+        list: List with the seeds.
+    """
     with open(filename) as file:
         line = file.readline()
         seeds = [int(x) for x in line.split()[1:]]
@@ -51,6 +77,15 @@ def read_seeds(filename: str) -> list:
 
 
 def smallest_location(filename: str) -> int:
+    """ Get the smallest locations from all seed ranges, then keep trying
+        lower seeds for the lowest location.
+
+    Args:
+        filename (str): File containing the seeds and ranges.
+
+    Returns:
+        int: The smallest location.
+    """
     seeds = read_seeds(filename)
     ranges = read_ranges(filename)
     locations = []
