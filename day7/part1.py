@@ -68,9 +68,8 @@ def compare_hands(hand_1: list, hand_2: list) -> int:
     """ Return positive value if hand_1 is stronger, negative if hand_2 is
     stronger, or 0 if they have equal strength.
     """
-    all_cards = ["A", "K", "Q", "J", "T",
-                 "9", "8", "7", "6", "5", "4", "3", "2"]
-    all_cards.reverse()
+    all_cards = ['2', '3', '4', '5', '6', '7', '8', '9',
+                 'T', 'J', 'Q', 'K', 'A']
     strength = 0
     for idx in range(len(hand_1["hand"])):
         if all_cards.index(hand_1["hand"][idx]) < all_cards.index(hand_2["hand"][idx]):
