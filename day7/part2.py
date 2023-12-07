@@ -6,6 +6,8 @@ from operator import countOf
 
 import numpy as np
 
+ALL_CARDS = ['J', '2', '3', '4', '5', '6', '7', '8', '9',
+                 'T', 'Q', 'K', 'A']
 
 def read_cards(filename: str) -> list:
     """ Read all card hands and bid and return them in a list.
@@ -95,15 +97,13 @@ def compare_hands(hand_1: list, hand_2: list) -> int:
     Returns:
         int: -1 if hand_1 should go first, 1 if after, 0 if they are the same.
     """
-    all_cards = ['J', '2', '3', '4', '5', '6', '7', '8', '9',
-                 'T', 'Q', 'K', 'A']
     strength = 0
     for idx in range(len(hand_1["hand"])):
-        if all_cards.index(hand_1["hand"][idx]) < all_cards.index(
+        if ALL_CARDS.index(hand_1["hand"][idx]) < ALL_CARDS.index(
             hand_2["hand"][idx]):
             strength = -1
             break
-        elif all_cards.index(hand_1["hand"][idx]) > all_cards.index(
+        elif ALL_CARDS.index(hand_1["hand"][idx]) > ALL_CARDS.index(
             hand_2["hand"][idx]):
             strength = 1
             break
