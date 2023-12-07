@@ -99,10 +99,12 @@ def compare_hands(hand_1: list, hand_2: list) -> int:
                  'T', 'Q', 'K', 'A']
     strength = 0
     for idx in range(len(hand_1["hand"])):
-        if all_cards.index(hand_1["hand"][idx]) < all_cards.index(hand_2["hand"][idx]):
+        if all_cards.index(hand_1["hand"][idx]) < all_cards.index(
+            hand_2["hand"][idx]):
             strength = -1
             break
-        elif all_cards.index(hand_1["hand"][idx]) > all_cards.index(hand_2["hand"][idx]):
+        elif all_cards.index(hand_1["hand"][idx]) > all_cards.index(
+            hand_2["hand"][idx]):
             strength = 1
             break
     return strength
