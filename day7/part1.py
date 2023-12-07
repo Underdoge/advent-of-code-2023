@@ -80,6 +80,7 @@ def compare_hands(hand_1: list, hand_2: list) -> int:
             break
     return strength
 
+
 def sort_hands(hands: list) -> list:
     """ Sort the provided hands list. """
     type_groups = []
@@ -100,12 +101,14 @@ def sort_hands(hands: list) -> list:
             sorted_hands.append(hand)
     return sorted_hands
 
+
 def total_winnings(sorted_hands: list) -> int:
     """ Calculate the total winnings. """
     winnings = 0
     for idx, hand in enumerate(sorted_hands):
         winnings += (idx+1)*hand["bid"]
     return winnings
+
 
 if __name__ == '__main__':
     tic = time.perf_counter()
