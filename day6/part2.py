@@ -3,21 +3,21 @@ import time
 from math import sqrt
 
 
-def read_race_info(filename: str) -> list:
+def read_race_info(filename: str) -> dict:
     """ Read the race info and return it in a dictionary.
 
     Args:
         filename (str): The file containing the race info.
 
     Returns:
-        list: The race info in a dictionary.
+        dict: The race info in a dictionary.
     """
     times = []
     distances = []
     with open(filename) as file:
         times = file.readline().rstrip().split()[1:]
         distances = file.readline().rstrip().split()[1:]
-    return [{"time": int("".join(times)), "distance": int("".join(distances))}]
+    return {"time": int("".join(times)), "distance": int("".join(distances))}
 
 
 def ways_you_can_win(race_info: dict) -> int:
@@ -39,23 +39,9 @@ def ways_you_can_win(race_info: dict) -> int:
     solutions_for_b.append(int((-b+sqrt(pow(b, 2)-4*a*c))/2*a))
     return solutions_for_b[0]-solutions_for_b[1]
 
-def multiply_ways_you_can_win(races_info: list) -> int:
-    """ Go through each race's info and calculate the ways you can win and
-        multiply them all together.
-
-    Args:
-        races_info (list): A list with each race's info.
-
-    Returns:
-        int: The product of all number of ways you can win each race.
-    """
-    product = 1
-    for race_info in races_info:
-        product *= ways_you_can_win(race_info)
-    return product
 
 if __name__ == '__main__':
     tic = time.perf_counter()
-    print(multiply_ways_you_can_win(read_race_info("input.txt")))
+    print(ways_you_can_win(read_race_info("input.txt")))
     toc = time.perf_counter()
     print(f"Took {toc - tic:0.4f} seconds")
