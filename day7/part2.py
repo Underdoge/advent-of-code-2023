@@ -1,4 +1,4 @@
-""" Day 7, part 1. """
+""" Day 7, part 2. """
 import time
 from functools import cmp_to_key
 from itertools import groupby
@@ -26,7 +26,8 @@ def read_cards(filename: str) -> list:
 
 def hand_strength(hand: list) -> (str, int):
     """ Rate hand strenght from five of a kind being the highest (7), to high
-    card being the lowest (1).
+        card being the lowest (1). If 'J' is in the hand, upscale the rate
+        accordingly.
 
     Args:
         hand (list): the 5 card hand.
@@ -40,14 +41,23 @@ def hand_strength(hand: list) -> (str, int):
         return 7
     # Four of a kind
     elif countOf(hand, hand[0]) == 4 or countOf(hand, hand[1]) == 4:
-        return 6
+        if 'J' in unique:
+            return 7
+        else:
+            return 6
     # Full house
     elif len(unique) == 2:
-        return 5
+        if 'J' in unique:
+            return 7
+        else:
+            return 5
     # Three of a kind
     elif (countOf(hand, hand[0]) == 3 or (
         countOf(hand, hand[1]) == 3 or countOf(hand, hand[4]) == 3)):
-        return 4
+        if 'J' in unique:
+            return 6
+        else:
+            return 4
     # Two pair
     elif len(unique) == 3:
         pairs = 0
@@ -55,11 +65,21 @@ def hand_strength(hand: list) -> (str, int):
             if countOf(hand, card) == 2:
                 pairs += 1
         if pairs == 2:
-            return 3
+            if countOf(hand, 'J') == 1:
+                return 5
+            elif countOf(hand, 'J') == 2:
+                return 6
+            else:
+                return 3
     # One pair
     elif len(unique) == 4:
-        return 2
+        if 'J' in unique:
+            return 4
+        else:
+            return 2
     # High card
+    elif 'J' in unique:
+        return 2
     else:
         return 1
 
@@ -75,8 +95,8 @@ def compare_hands(hand_1: list, hand_2: list) -> int:
     Returns:
         int: -1 if hand_1 should go first, 1 if after, 0 if they are the same.
     """
-    all_cards = ['2', '3', '4', '5', '6', '7', '8', '9',
-                 'T', 'J', 'Q', 'K', 'A']
+    all_cards = ['J', '2', '3', '4', '5', '6', '7', '8', '9',
+                 'T', 'Q', 'K', 'A']
     strength = 0
     for idx in range(len(hand_1["hand"])):
         if all_cards.index(hand_1["hand"][idx]) < all_cards.index(hand_2["hand"][idx]):
