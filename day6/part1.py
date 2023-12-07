@@ -1,5 +1,6 @@
 """ Day 6, part 1."""
 import time
+from math import ceil, floor, sqrt, modf
 
 
 def read_race_info(filename: str) -> dict:
@@ -23,20 +24,35 @@ def read_race_info(filename: str) -> dict:
 
 
 def ways_you_can_win(race_info: dict) -> int:
-    """ Calculate the number of ways you can win a race.
+    """ Calculate solution for -b^2 + time*b - distance = 0
+    where b = time the button stays pressed. This formula was obtained from
+    "race distance"/b*(time-b) = 1.
+
+    Number of ways you can win are always between (but not inclusive) solutions
+    of b, see https://t.ly/FFwnp.
 
     Args:
-        race_info (dict): Contains the race time and distance.
+        race_info (dict): a dictionary with the race info.
 
     Returns:
-        int: The number of ways you can win.
+        (int): The difference of the minimum and maximum button press times.
     """
-    wins = 0
-    for button_press in range(race_info["distance"]):
-        if button_press*(race_info["time"]-button_press) > (
-            race_info["distance"]):
-            wins += 1
-    return wins
+    solutions_for_b = []
+    a = -1
+    b = race_info["time"]
+    c = -race_info["distance"]
+    solutions_for_b.append((-b-sqrt(pow(b, 2)-4*a*c))/2*a)
+    solutions_for_b.append((-b+sqrt(pow(b, 2)-4*a*c))/2*a)
+    solutions_for_b = sorted(solutions_for_b)
+    frac_1, _ = modf(solutions_for_b[1])
+    if frac_1 == 0:
+        solutions_for_b[1] -= 1
+        solutions_for_b[0] += 1
+    else:
+        solutions_for_b[1] = floor(solutions_for_b[1])
+        solutions_for_b[0] = ceil(solutions_for_b[0])
+    return solutions_for_b[1]-solutions_for_b[0]+1
+
 
 def multiply_ways_you_can_win(races_info: list) -> int:
     """ Go through each race's info and calculate the ways you can win and
@@ -55,6 +71,6 @@ def multiply_ways_you_can_win(races_info: list) -> int:
 
 if __name__ == '__main__':
     tic = time.perf_counter()
-    print(multiply_ways_you_can_win(read_race_info("input.txt")))
+    print("Result:", multiply_ways_you_can_win(read_race_info("input.txt")))
     toc = time.perf_counter()
     print(f"Took {toc - tic:0.4f} seconds")
