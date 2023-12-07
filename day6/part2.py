@@ -21,7 +21,7 @@ def read_race_info(filename: str) -> dict:
 
 
 def ways_you_can_win(race_info: dict) -> int:
-    """ Calculate solution for -b^2 + time*b -distance = 0
+    """ Calculate solution for -b^2 + time*b - distance = 0
     where b = time the button stays pressed. This formula was obtained from
     "minimum distance to win"/b*(time-b) = 1.
 
