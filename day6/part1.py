@@ -24,11 +24,11 @@ def read_race_info(filename: str) -> dict:
 
 
 def ways_you_can_win(race_info: dict) -> int:
-    """ Calculate solution for -b^2 + time*b - distance = 0
+    """ Calculate solution for -b^2 + time*b - distance -1 = 0
     where b = time the button stays pressed. This formula was obtained from
-    "race distance"/b*(time-b) = 1.
+    "race distance + 1"/b*("race time"-b) = 1.
 
-    Number of ways you can win are always between (but not inclusive) solutions
+    Integer number of ways you can win always start or are above solutions
     of b, see https://t.ly/FFwnp.
 
     Args:
@@ -40,15 +40,12 @@ def ways_you_can_win(race_info: dict) -> int:
     solutions_for_b = []
     a = -1
     b = race_info["time"]
-    c = -race_info["distance"]
+    c = -race_info["distance"] - 1
     solutions_for_b.append((-b-sqrt(pow(b, 2)-4*a*c))/2*a)
     solutions_for_b.append((-b+sqrt(pow(b, 2)-4*a*c))/2*a)
     solutions_for_b = sorted(solutions_for_b)
     frac_1, _ = modf(solutions_for_b[1])
-    if frac_1 == 0:
-        solutions_for_b[1] -= 1
-        solutions_for_b[0] += 1
-    else:
+    if frac_1 != 0:
         solutions_for_b[1] = floor(solutions_for_b[1])
         solutions_for_b[0] = ceil(solutions_for_b[0])
     return solutions_for_b[1]-solutions_for_b[0]+1
