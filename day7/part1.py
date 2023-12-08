@@ -26,7 +26,7 @@ def read_cards(filename: str) -> list:
                           "bid": int(hand_and_bid[1])})
     return hands
 
-def hand_strength(hand: list) -> (str, int):
+def hand_strength(hand: list) -> int:
     """ Rate hand strenght from five of a kind being the highest (7), to high
     card being the lowest (1).
 
