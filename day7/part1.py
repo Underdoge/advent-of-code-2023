@@ -6,8 +6,8 @@ from operator import countOf
 
 import numpy as np
 
-ALL_CARDS = ['2', '3', '4', '5', '6', '7', '8', '9',
-                 'T', 'J', 'Q', 'K', 'A']
+ALL_CARDS = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+
 
 def read_cards(filename: str) -> list:
     """ Read all card hands and bid and return them in a list.
@@ -18,6 +18,7 @@ def read_cards(filename: str) -> list:
     Returns:
         list: A list of lists containing the hands and bids.
     """
+
     hands = []
     with open(filename) as file:
         for line in file:
@@ -26,9 +27,10 @@ def read_cards(filename: str) -> list:
                           "bid": int(hand_and_bid[1])})
     return hands
 
+
 def hand_strength(hand: list) -> int:
     """ Rate hand strenght from five of a kind being the highest (7), to high
-    card being the lowest (1).
+        card being the lowest (1).
 
     Args:
         hand (list): the 5 card hand.
@@ -48,7 +50,7 @@ def hand_strength(hand: list) -> int:
         return 5
     # Three of a kind
     elif (countOf(hand, hand[0]) == 3 or (
-        countOf(hand, hand[1]) == 3 or countOf(hand, hand[4]) == 3)):
+          countOf(hand, hand[1]) == 3 or countOf(hand, hand[4]) == 3)):
         return 4
     # Two pair
     elif len(unique) == 3:

@@ -38,14 +38,6 @@ ignore = [
     "S311"
 ]
 
-
-[tool.ruff.flake8-bugbear]
-extend-immutable-calls = [
-    "chr",
-    "typer.Argument",
-    "typer.Option",
-]
-
 [tool.ruff.lint]
 # Add the `line-too-long` rule to the enforced rule set.
 extend-select = ["E501"]

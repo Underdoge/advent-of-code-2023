@@ -6,8 +6,8 @@ from operator import countOf
 
 import numpy as np
 
-ALL_CARDS = ['J', '2', '3', '4', '5', '6', '7', '8', '9',
-                 'T', 'Q', 'K', 'A']
+ALL_CARDS = ['J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A']
+
 
 def read_cards(filename: str) -> list:
     """ Read all card hands and bid and return them in a list.
@@ -25,6 +25,7 @@ def read_cards(filename: str) -> list:
             hands.append({"hand": list(hand_and_bid[0]),
                           "bid": int(hand_and_bid[1])})
     return hands
+
 
 def hand_strength(hand: list) -> int:
     """ Rate hand strenght from five of a kind being the highest (7), to high
