@@ -21,24 +21,9 @@ def read_instructions(filename: str) -> (list, dict):
         instructions = [0 if x == "L" else 1 for x in file.readline().rstrip()]
         file.readline()
         for line in file:
-            key, left, right = re.findall("[\w]{3}", line.rstrip())
+            key, left, right = re.findall("[\\w]{3}", line.rstrip())
             network[key] = [left, right]
     return instructions, network
-
-
-def find_next(instructions: list, network: dict, instruction_idx: int, next_step: str, next_dir: int, steps: int, target_node: str) -> int:
-    print("Current:", next_step, "=>", network[next_step], "from_dir:", next_dir, "Steps:", steps, "instruction_idx", instruction_idx)
-    if next_step == target_node and instruction_idx == 0:
-        print("Final steps:", steps)
-        return steps
-    else:
-        if instruction_idx+1 >= len(instructions):
-            instruction_idx = 0
-            input()
-        else:
-            instruction_idx += 1
-        print("Next dir:", instructions[instruction_idx])
-        return find_next(instructions=instructions, network=network, instruction_idx=instruction_idx, next_step=network[next_step][instructions[instruction_idx]], next_dir=instructions[instruction_idx], steps=steps+1, target_node=target_node)
 
 
 def count_steps(instructions: list, network: dict) -> int:
@@ -55,13 +40,14 @@ def count_steps(instructions: list, network: dict) -> int:
     """
     target_node = 'ZZZ'
     instruction_idx = 0
+    instruction_num = len(instructions)
     steps = 1
     next_dir = instructions[instruction_idx]
     next_step = network['AAA'][next_dir]
     while next_step != target_node:
         if next_step == target_node and instruction_idx == 0:
             break
-        if instruction_idx+1 == len(instructions):
+        if instruction_idx + 1 == instruction_num:
             instruction_idx = 0
         else:
             instruction_idx += 1
@@ -69,6 +55,7 @@ def count_steps(instructions: list, network: dict) -> int:
         next_dir=instructions[instruction_idx]
         steps += 1
     return steps
+
 
 if __name__ == '__main__':
     tic = time.perf_counter()
