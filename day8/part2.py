@@ -91,7 +91,7 @@ def product_of_lowest_common_prime_factors(steps_between_z: list) -> int:
         steps_between_z (list): Number of steps between Z's of each sequence.
 
     Returns:
-        int: The product of the multiplication.
+        int: The product of all lowest common prime factors.
     """
     product = 1
     used_factors = []
