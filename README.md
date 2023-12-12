@@ -9,6 +9,6 @@ My answers to [Advent of Code 2023](https://adventofcode.com/2023).
 - [Day 5](https://adventofcode.com/2023/day/5) | Answers: [Part 1](https://github.com/Underdoge/advent-of-code-2023/blob/main/day5/part1.py) [Part 2](https://github.com/Underdoge/advent-of-code-2023/blob/main/day5/part2.py)
 - [Day 6](https://adventofcode.com/2023/day/6) | Answers: [Part 1](https://github.com/Underdoge/advent-of-code-2023/blob/main/day6/part1.py) [Part 2](https://github.com/Underdoge/advent-of-code-2023/blob/main/day6/part2.py)
 - [Day 7](https://adventofcode.com/2023/day/7) | Answers: [Part 1](https://github.com/Underdoge/advent-of-code-2023/blob/main/day7/part1.py) [Part 2](https://github.com/Underdoge/advent-of-code-2023/blob/main/day7/part2.py)
-- [Day 8](https://adventofcode.com/2023/day/8) | Answers: [Part 1](https://github.com/Underdoge/advent-of-code-2023/blob/main/day8/part1.py)
+- [Day 8](https://adventofcode.com/2023/day/8) | Answers: [Part 1](https://github.com/Underdoge/advent-of-code-2023/blob/main/day8/part1.py) [Part 2](https://github.com/Underdoge/advent-of-code-2023/blob/main/day8/part2.py)
 
 What is [Advent of Code 2023](https://adventofcode.com/2023/about)?
