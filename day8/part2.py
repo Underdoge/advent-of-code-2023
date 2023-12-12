@@ -13,7 +13,7 @@ def read_instructions(filename: str) -> (list, dict):
         filename (str): The file containing the instructions and network.
 
     Returns:
-        (list, list): A tuple with a list of instructions translated from L's
+        (list, dict): A tuple with a list of instructions translated from L's
             and R's into 0's and 1's, and a network of nodes in a dictionary
             with the form of  {target : [left jump, right jump]} where target,
             left jump and right jump are groups of three uppercase letters.
