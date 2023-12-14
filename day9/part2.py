@@ -1,4 +1,4 @@
-""" Day 9, part 1."""
+""" Day 9, part 2."""
 import time
 from operator import countOf
 
@@ -19,14 +19,14 @@ def read_values(filename: str) -> list:
     return history
 
 
-def next_value(history: list) -> int:
-    """ Return the next value in the history.
+def previous_value(history: list) -> int:
+    """ Return the previous value in the history.
 
     Args:
         history (list): A list with the history values.
 
     Returns:
-        int: The next value in the history.
+        int: The previous value in the history.
     """
     diffs = []
     diffs.append(history)
@@ -41,13 +41,13 @@ def next_value(history: list) -> int:
             if countOf(diff, 0) == len(diff):
                 y = len(diffs) - 2
                 while y >= 0:
-                    diffs[y].append(diffs[y][-1]+diffs[y+1][-1])
+                    diffs[y].insert(0, diffs[y][0]-diffs[y+1][0])
                     y -= 1
-                return diffs[0][-1]
+                return diffs[0][0]
         x += 1
 
 
-def sum_extrapolated_values(values: list) -> int:
+def sum_previous_values(values: list) -> int:
     """ Sum all next values in the histories.
 
     Args:
@@ -58,13 +58,13 @@ def sum_extrapolated_values(values: list) -> int:
     """
     sum = 0
     for history in values:
-        sum += next_value(history)
+        sum += previous_value(history)
     return sum
 
 
 if __name__ == '__main__':
     tic = time.perf_counter()
     values = read_values("input.txt")
-    print("Sum of extrapolated values:", sum_extrapolated_values(values))
+    print("Sum of previous values:", sum_previous_values(values))
     toc = time.perf_counter()
     print(f"Took {toc - tic:0.4f} seconds")
