@@ -284,11 +284,6 @@ if __name__ == '__main__':
     new_pipes = count_steps(pipes, start)
     print("")
     enclosed_pipes = flood_outside(new_pipes, (0,0), mode='aggressive')
-    for line in enclosed_pipes:
-        for char in line:
-            print(char, end="")
-        print("")
-    print("")
     cleaned_pipes = follow_path(enclosed_pipes, start)
     for line in cleaned_pipes:
         for char in line:
