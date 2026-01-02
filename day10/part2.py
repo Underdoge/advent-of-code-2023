@@ -211,6 +211,12 @@ def follow_path(pipes: list, start: (int, int)) -> int:
                             pipes[y][x-1] = ' '
                         return clean_left_right_up_down(x, y-1, 'up')
                     elif pipes[y][x] == '╔':
+                        if pipes[y][x-1] in old:
+                            pipes[y][x-1] = ' '
+                        if pipes[y-1][x] in old:
+                            pipes[y-1][x] = ' '
+                        if pipes[y-1][x-1] in old:
+                            pipes[y-1][x-1] = ' '
                         return clean_left_right_up_down(x+1, y, 'right')
                     elif pipes[y][x] == '╗':
                         return clean_left_right_up_down(x-1, y, 'left')
@@ -222,6 +228,12 @@ def follow_path(pipes: list, start: (int, int)) -> int:
                     elif pipes[y][x] == '╚':
                         return clean_left_right_up_down(x+1, y, 'right')
                     elif pipes[y][x] == '╝':
+                        if pipes[y][x+1] in old:
+                            pipes[y][x+1] = ' '
+                        if pipes[y+1][x] in old:
+                            pipes[y+1][x] = ' '
+                        if pipes[y+1][x+1] in old:
+                            pipes[y+1][x+1] = ' '
                         return clean_left_right_up_down(x-1, y, 'left')
                 case 'left':
                     if pipes[y][x] == '═':
@@ -237,6 +249,7 @@ def follow_path(pipes: list, start: (int, int)) -> int:
                         if pipes[y-1][x] in old:
                             pipes[y-1][x] = ' '
                         return clean_left_right_up_down(x+1, y, 'right')
+                    elif pipes[y][x] == '╝':    
                         return clean_left_right_up_down(x, y-1, 'up')
                     elif pipes[y][x] == '╗':
                         return clean_left_right_up_down(x, y+1, 'down')
